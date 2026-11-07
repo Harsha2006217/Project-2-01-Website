@@ -1,0 +1,32 @@
+@startuml
+title Wanneer geeft de app een antwoord? - ontwerp wildcard
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #E8F0FE
+  BorderColor #1D4ED8
+}
+start
+:Foto ontvangen;
+:Model geeft verdeling over kat / hond / overig;
+:Hoogste confidence bepalen;
+if (confidence >= ondergrens?) then (ja)
+  :Toon categorie + confidence;
+  note right
+    boven de grens:
+    gewoon kat, hond of overig
+  end note
+else (nee)
+  :Toon "weet ik niet";
+  :Toon wel de verdeling over drie categorieen;
+  note right
+    AC3: gebruiker ziet waarom
+    het model twijfelt
+  end note
+endif
+:Leg meting vast in logbestand;
+note right
+  datum, instellingen, testset,
+  voorspelling, confidence
+end note
+stop
+@enduml

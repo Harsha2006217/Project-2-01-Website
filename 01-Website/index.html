@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hond of kat? · AI Engineer — Harsha Kanaparthi</title>
+  <meta name="description" content="Project 2 HBO-ICT: onderzoek naar de beroepsrol AI Engineer en een beeldclassificatiemodel dat katten, honden en overige foto's uit elkaar houdt. Resultaten, fouten en verbeteringen.">
+  <meta name="author" content="Harsha Kanaparthi">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="img/poot.svg" type="image/svg+xml">
+</head>
+<body>
+
+<a class="skiplink" href="#inhoud">Meteen naar de inhoud</a>
+
+<!-- ============================================================
+     HEADER
+     Blijft staan bij scrollen. Onder 60em klapt het menu in.
+     ============================================================ -->
+<header class="kop" id="boven">
+  <div class="balk">
+    <a class="merk" href="#boven">
+      <img class="merk-icoon" src="img/poot.svg" alt="" width="34" height="34">
+      <span class="merk-tekst"><strong>Hond of kat?</strong><small>AI Engineer · Project 2</small></span>
+    </a>
+
+    <button class="menuknop" type="button" aria-expanded="false" aria-controls="hoofdmenu">
+      <span class="menu-streepjes" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Menu</span>
+    </button>
+
+    <nav id="hoofdmenu" class="menu" aria-label="Hoofdmenu">
+      <ul>
+        <li><a href="#beroepsrol">Beroepsrol</a></li>
+        <li><a href="#model">Het model</a></li>
+        <li><a href="#experimenten">Experimenten</a></li>
+        <li><a href="#resultaten">Resultaten</a></li>
+        <li><a href="#grenzen">Grenzen</a></li>
+        <li><a href="#leerpad">Leerpad</a></li>
+        <li><a href="#woordenlijst">Woordenlijst</a></li>
+      </ul>
+    </nav>
+
+    <button class="leesknop" type="button" aria-describedby="lees-uitleg">
+      <span aria-hidden="true">◐</span><span>Leesmodus</span>
+    </button>
+    <p id="lees-uitleg" class="altijd-verborgen">Vergroot de tekst en de regelafstand voor rustiger lezen.</p>
+  </div>
+  <div class="voortgang" aria-hidden="true"><span id="voortgangsbalk"></span></div>
+</header>
+
+<main id="inhoud">
+
+  <!-- ==========================================================
+       1. START — in drie zinnen waar dit over gaat.
+       Bewust kort: de feedback was "te veel informatie voor 10 min".
+       ========================================================== -->
+  <section class="sectie hero" id="start">
+    <div class="wrap">
+      <p class="label">HBO-ICT · Semester 1 · Project 2</p>
+      <h1>Een model dat een hond van een kat onderscheidt — en de gevallen waarin het de plank misslaat</h1>
+      <p class="intro">
+        Wij bouwden met Liner.ai een beeldclassificatiemodel met drie categorieën: <strong>kat</strong>,
+        <strong>hond</strong> en <strong>overig</strong>. Daarna zochten we vooral uit waar het misgaat.
+        Op deze pagina staan onze metingen, de fouten die we vonden en wat we eraan veranderden.
+      </p>
+
+      <ul class="kerncijfers">
+        <li><strong>6</strong><span>experimenten met het model uitgevoerd</span></li>
+        <li><strong>99,96%</strong><span>hoogste confidence, bij een half verscholen dier</span></li>
+        <li><strong>50 / 50</strong><span>model gokt bij hond én kat in één foto</span></li>
+      </ul>
+
+      <div class="knoppenrij">
+        <a class="knop knop-primair" href="#experimenten">Bekijk de experimenten</a>
+        <a class="knop" href="#beroepsrol">Wat doet een AI Engineer?</a>
+      </div>
+
+      <p class="helden-voetnoot">
+        Squad: Giovanni, Nick en Harsha Kanaparthi · twee onderwijsweken · infographic gepresenteerd op
+        donderdag 24 september 2026.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       2. BEROEPSROL — eerst in gewone taal, dan de details.
+       Antwoord op feedback: "uitleg over de beroepsrol is wat technisch".
+       ========================================================== -->
+  <section class="sectie" id="beroepsrol" aria-labelledby="beroepsrol-kop">
+    <div class="wrap">
+      <p class="label">Onderdeel A</p>
+      <h2 id="beroepsrol-kop">Wat doet een AI Engineer?</h2>
+
+      <div class="kort-antwoord">
+        <h3>In gewone taal</h3>
+        <p>
+          Een AI Engineer zorgt dat een computer iets leert van voorbeelden, en dat die truc daarna
+          gewoon werkt in een app. Je verzamelt voorbeelden, je traint er een model mee, je test of
+          het klopt, en je repareert het als het fout zit. Het grootste deel van het werk is
+          <strong>data controleren en testen</strong>, niet het bouwen van het model zelf.
+        </p>
+      </div>
+
+      <div class="kaarten">
+        <article class="kaart">
+          <h3>Functietitels die je tegenkomt</h3>
+          <ul class="vinkjes">
+            <li>AI Engineer</li><li>ML Engineer</li><li>GenAI Engineer</li>
+            <li>MLOps Engineer</li><li>Data &amp; AI Engineer</li>
+          </ul>
+        </article>
+        <article class="kaart">
+          <h3>Wat werkgevers vragen</h3>
+          <ul class="vinkjes">
+            <li>Python</li>
+            <li>PyTorch of TensorFlow</li>
+            <li>SQL, Pandas, data-analyse</li>
+            <li>Docker, Kubernetes, Azure</li>
+            <li>LLM's, RAG, vector databases</li>
+            <li>Samenwerken en uitleggen</li>
+          </ul>
+        </article>
+        <article class="kaart">
+          <h3>Wat je ermee maakt</h3>
+          <ul class="vinkjes">
+            <li>Een chatbot die je eigen documenten kent (RAG)</li>
+            <li>Aanbevelingen voor producten of content</li>
+            <li>Beeldherkenning, zoals ons kat-hond-model</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- Inklapbaar: de theorie staat er wel, maar niet in de weg. -->
+      <details class="uitklap">
+        <summary>Een week uit het werkleven (maandag t/m vrijdag)</summary>
+        <div class="uitklap-inhoud">
+          <div class="tabelwrap" tabindex="0" role="region" aria-label="Tabel: een week uit het werkleven">
+          <table class="tabel tabel-smal">
+            <caption>Zo zagen wij de week van een AI Engineer terug in vacatures en gesprekken.</caption>
+            <thead><tr><th scope="col">Dag</th><th scope="col">Waar de tijd heen gaat</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Maandag</th><td>Data verkennen en opschonen</td></tr>
+              <tr><th scope="row">Dinsdag</th><td>Modellen trainen en experimenteren met PyTorch of ML-tools</td></tr>
+              <tr><th scope="row">Woensdag</th><td>LangChain-pipeline bouwen, Docker, deployment</td></tr>
+              <tr><th scope="row">Donderdag</th><td>Deployen en monitoren</td></tr>
+              <tr><th scope="row">Vrijdag</th><td>Stakeholder-meeting, rapportage en ethiek</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="noot">Dit is een samenvatting uit ons onderzoek, geen agenda van één specifieke werkgever.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       3. HET MODEL — bewust simpel, als antwoord op "show model heel simpel".
+       ========================================================== -->
+  <section class="sectie sectie-alt" id="model" aria-labelledby="model-kop">
+    <div class="wrap">
+      <p class="label">Onderdeel B</p>
+      <h2 id="model-kop">Hoe het model leert, in zes stappen</h2>
+      <p class="intro">Geen wiskunde. Dit is precies wat wij gedaan hebben.</p>
+
+      <ol class="pijplijn">
+        <li><span class="stap-nr">1</span><h3>Verzamelen</h3><p>Foto's van katten, honden en andere dingen bij elkaar zoeken.</p></li>
+        <li><span class="stap-nr">2</span><h3>Labelen</h3><p>Elke foto in de map <code>kat</code>, <code>hond</code> of <code>overig</code> zetten. De map is het label.</p></li>
+        <li><span class="stap-nr">3</span><h3>Trainen</h3><p>Liner.ai zoekt zelf patronen in die voorbeelden.</p></li>
+        <li><span class="stap-nr">4</span><h3>Testen</h3><p>Foto's laten zien die het model nog nooit zag.</p></li>
+        <li><span class="stap-nr">5</span><h3>Analyseren</h3><p>Kijken wanneer het fout zit en hoe zeker het dan is.</p></li>
+        <li><span class="stap-nr">6</span><h3>Verbeteren</h3><p>Data of instellingen aanpassen en opnieuw testen.</p></li>
+      </ol>
+
+      <div class="uitleg-blok">
+        <h3>Wat betekent die confidence?</h3>
+        <p>
+          Het model zegt niet alleen <em>“hond”</em>, het zegt ook hoe zeker het is. Bij 98% bedoelt het:
+          van alle zekerheid die ik verdeel, gaat 98% naar hond. <strong>Dat is geen kans dat het klopt.</strong>
+          Bij onze proef met een hond én een kat in beeld was het model eerst 75% zeker van “hond”,
+          en bij een tweede proef 50/50 — terwijl het antwoord niet eenduidig is. Hoog cijfer, toch onzeker.
+        </p>
+      </div>
+
+      <details class="uitklap">
+        <summary>Wat wij in Liner.ai instelden en wat we exporteerden</summary>
+        <div class="uitklap-inhoud">
+          <p>
+            Liner.ai traint het model en exporteert het als een <strong>TensorFlow SavedModel</strong>:
+            een map met <code>saved_model.pb</code>, een <code>classes.json</code> met de klassen en een
+            <code>example.py</code> met voorbeeldcode. In onze repository staan die exports onder
+            <code>models/</code>, zodat we meerdere versies naast elkaar kunnen testen.
+          </p>
+          <p>
+            In <code>tools/common.py</code> lezen wij de invoerbreedte uit dat <code>example.py</code>,
+            schalen de foto naar die breedte en geven hem aan het model. Het model geeft per klasse een
+            score terug; die tellen we op naar onze drie groepen.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       4. EXPERIMENTEN — de zes proeven, met filter.
+       ========================================================== -->
+  <section class="sectie" id="experimenten" aria-labelledby="exp-kop">
+    <div class="wrap">
+      <p class="label">Metingen</p>
+      <h2 id="exp-kop">Zes experimenten</h2>
+      <p class="intro">
+        Elke proef beantwoordt één vraag. De percentages komen uit onze testnotities in Liner.ai.
+      </p>
+
+      <div class="filterbalk" role="group" aria-labelledby="filter-label">
+        <span id="filter-label" class="filter-label">Toon:</span>
+        <button class="chip is-actief" type="button" data-filter="alles" aria-pressed="true">Alles</button>
+        <button class="chip" type="button" data-filter="goed" aria-pressed="false">Ging goed</button>
+        <button class="chip" type="button" data-filter="twijfel" aria-pressed="false">Model twijfelt</button>
+      </div>
+      <p class="altijd-verborgen" role="status" id="filter-status"></p>
+
+      <div class="kaarten kaarten-proef" id="proeflijst">
+
+        <article class="kaart proef" data-soort="goed">
+          <p class="proef-nr">Proef 1</p>
+          <h3>Gewone hondenfoto's</h3>
+          <p class="proef-vraag">Klopt de basis?</p>
+          <p>Het model maakte geen echte fouten op de aangeboden foto's. De confidence lag rond de 90%.</p>
+          <div class="meter" style="--waarde:90%"><span class="meter-label">hond</span><span class="meter-balk"><i></i></span><span class="meter-getal">±90%</span></div>
+          <p class="conclusie goed">Basis werkt.</p>
+        </article>
+
+        <article class="kaart proef" data-soort="goed">
+          <p class="proef-nr">Proef 2</p>
+          <h3>Willekeurige objecten</h3>
+          <p class="proef-vraag">Ziet het model dat er geen dier in beeld is?</p>
+          <p>Losse voorwerpen werden als “overig” herkend, met ongeveer 90% confidence.</p>
+          <div class="meter" style="--waarde:90%"><span class="meter-label">overig</span><span class="meter-balk"><i></i></span><span class="meter-getal">±90%</span></div>
+          <p class="conclusie goed">De derde categorie doet wat hij moet doen.</p>
+        </article>
+
+        <article class="kaart proef" data-soort="goed">
+          <p class="proef-nr">Proef 3</p>
+          <h3>Meer foto's zonder dier erbij</h3>
+          <p class="proef-vraag">Helpt het om de categorie “overig” uit te breiden?</p>
+          <p>Na het toevoegen van extra afbeeldingen steeg de confidence van ongeveer 90% naar 98%.</p>
+          <div class="meter" style="--waarde:90%"><span class="meter-label">voor</span><span class="meter-balk"><i></i></span><span class="meter-getal">90%</span></div>
+          <div class="meter meter-na" style="--waarde:98%"><span class="meter-label">na</span><span class="meter-balk"><i></i></span><span class="meter-getal">98%</span></div>
+          <p class="conclusie goed">+8 procentpunt door meer voorbeelden.</p>
+        </article>
+
+        <article class="kaart proef" data-soort="goed">
+          <p class="proef-nr">Proef 4</p>
+          <h3>Half verscholen dier</h3>
+          <p class="proef-vraag">Werkt het nog als het dier amper zichtbaar is?</p>
+          <p>Ook bij een dier dat nauwelijks in beeld was, gaf het model 99,96%.</p>
+          <div class="meter" style="--waarde:99.96%"><span class="meter-label">zeker</span><span class="meter-balk"><i></i></span><span class="meter-getal">99,96%</span></div>
+          <p class="conclusie let-op">Opvallend: bijna geen zichtbaar dier, toch de hoogste zekerheid van alle proeven.</p>
+        </article>
+
+        <article class="kaart proef" data-soort="twijfel">
+          <p class="proef-nr">Proef 5</p>
+          <h3>Hond én kat in één foto</h3>
+          <p class="proef-vraag">Wat kiest het model als beide kloppen?</p>
+          <p>Eerste keer 75% hond en 25% kat. Bij een herhaling werd het 50/50.</p>
+          <div class="meter" style="--waarde:75%"><span class="meter-label">hond</span><span class="meter-balk"><i></i></span><span class="meter-getal">75%</span></div>
+          <div class="meter meter-kat" style="--waarde:25%"><span class="meter-label">kat</span><span class="meter-balk"><i></i></span><span class="meter-getal">25%</span></div>
+          <p class="conclusie fout">Het model móét kiezen. Twee dieren in beeld past niet in dit model.</p>
+        </article>
+
+        <article class="kaart proef" data-soort="twijfel">
+          <p class="proef-nr">Proef 6</p>
+          <h3>Hybrides: gegenereerde kat-hond-mengsels</h3>
+          <p class="proef-vraag">Wat doet het model met iets dat niet bestaat?</p>
+          <p>Eerst 60% hond en 35% kat. Met duidelijkere beelden koos het model bij een katachtig mengsel 99% kat, en bij een hondachtig mengsel 99% hond.</p>
+          <div class="meter" style="--waarde:60%"><span class="meter-label">hond</span><span class="meter-balk"><i></i></span><span class="meter-getal">60%</span></div>
+          <div class="meter meter-kat" style="--waarde:35%"><span class="meter-label">kat</span><span class="meter-balk"><i></i></span><span class="meter-getal">35%</span></div>
+          <p class="conclusie let-op">Hoe vager het beeld, hoe lager de zekerheid. Het model kiest altijd een van de drie.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       5. RESULTATEN — tabel met zoeken, filteren en sorteren.
+       ========================================================== -->
+  <section class="sectie sectie-alt" id="resultaten" aria-labelledby="res-kop">
+    <div class="wrap">
+      <p class="label">Overzicht</p>
+      <h2 id="res-kop">Alle metingen in één tabel</h2>
+      <p class="intro">Zoek, filter of sorteer op confidence. Dezelfde cijfers als hierboven, nu naast elkaar.</p>
+
+      <div class="tabelknoppen">
+        <label class="zoekveld">
+          <span>Zoek in de metingen</span>
+          <input type="search" id="zoek" placeholder="bijvoorbeeld: hybride of verscholen" autocomplete="off">
+        </label>
+        <label class="sorteerveld">
+          <span>Sorteer op</span>
+          <select id="sortering">
+            <option value="volgorde">Proef (1 t/m 6)</option>
+            <option value="hoog">Confidence, hoogste eerst</option>
+            <option value="laag">Confidence, laagste eerst</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="tabelwrap" tabindex="0" role="region" aria-label="Tabel met alle metingen, horizontaal scrollbaar">
+        <table class="tabel tabel-data" id="metingentabel">
+          <caption>Voorspellingen en confidence per proef, zoals vastgelegd in onze testnotities.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Proef</th><th scope="col">Wat we aanboden</th>
+              <th scope="col">Voorspelling</th><th scope="col">Confidence</th><th scope="col">Oordeel</th>
+            </tr>
+          </thead>
+          <tbody id="metingenrijen"><!-- gevuld door js/script.js --></tbody>
+        </table>
+      </div>
+      <p class="noot" id="telling"></p>
+
+      <details class="uitklap">
+        <summary>Hoe we deze metingen hebben vastgelegd — en wat nog ontbreekt</summary>
+        <div class="uitklap-inhoud">
+          <p>
+            De percentages hierboven komen uit onze testnotities tijdens het werken in Liner.ai.
+            In de repository staat <code>tools/evaluate.py</code>: dat script loopt met één commando
+            over alle testsets en schrijft per afbeelding de voorspelling, de confidence, het echte label
+            en een goed/fout-oordeel naar een Excel-bestand, plus een samenvatting per testset en een
+            verwarringsmatrix.
+          </p>
+          <p>
+            <strong>Wat nog ontbreekt:</strong> het volledige per-afbeelding-logbestand van alle zes de
+            proeven. De tabel hierboven is daarom een samenvatting, geen complete meetreeks. Dat is de
+            eerste stap voor een volgende iteratie.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       6. GRENS — waar het model niet tegen kan. Eerlijk stuk.
+       ========================================================== -->
+  <section class="sectie" id="grenzen" aria-labelledby="grenzen-kop">
+    <div class="wrap">
+      <p class="label">Foutenanalyse</p>
+      <h2 id="grenzen-kop">Waar dit model niet tegen kan</h2>
+
+      <div class="kaarten">
+        <article class="kaart kaart-rand">
+          <h3>Twee dieren in beeld</h3>
+          <p>Het model mag maar één antwoord geven. Bij een hond én een kat werd het 50/50. Dat is geen bug, dat is de opzet.</p>
+          <p class="oplossing"><strong>Oplossing:</strong> objectdetectie in plaats van classificatie, of een vierde categorie “meerdere dieren”.</p>
+        </article>
+        <article class="kaart kaart-rand">
+          <h3>Iets dat niet bestaat</h3>
+          <p>Een gegenereerde kat-hond-hybride wordt toch als kat of hond bestempeld. “Geen van beide” kan het model niet zeggen.</p>
+          <p class="oplossing"><strong>Oplossing:</strong> een ondergrens instellen: onder bijvoorbeeld 70% confidence geen antwoord tonen maar “weet ik niet”.</p>
+        </article>
+        <article class="kaart kaart-rand">
+          <h3>Hoog cijfer is geen garantie</h3>
+          <p>Bij een half verscholen dier gaf het model 99,96%. Die zekerheid zegt iets over het model, niet over de werkelijkheid.</p>
+          <p class="oplossing"><strong>Oplossing:</strong> niet op één getal vertrouwen, maar op een testset met bekende labels.</p>
+        </article>
+      </div>
+
+      <details class="uitklap">
+        <summary>Twee dataset-experimenten die we klaar hebben staan</summary>
+        <div class="uitklap-inhoud">
+          <p>In onze repository staan naast <code>dataset/</code> nog twee varianten, om de invloed van de dataset te meten:</p>
+          <div class="tabelwrap" tabindex="0" role="region" aria-label="Tabel: dataset-varianten in de repository">
+          <table class="tabel">
+            <thead><tr><th scope="col">Map</th><th scope="col">Wat er anders is</th><th scope="col">Vraag die we ermee beantwoorden</th></tr></thead>
+            <tbody>
+              <tr><td><code>dataset-onbalans/</code></td><td>Ongelijke verhouding tussen de drie categorieën</td><td>Gaat het model de grootste categorie voortrekken?</td></tr>
+              <tr><td><code>dataset-teckels/</code></td><td>Alleen teckels als “hond”</td><td>Herkent het daarna een golden retriever nog als hond?</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="noot">De meetresultaten van deze twee varianten staan nog niet in dit overzicht; die voegen we toe zodra we ze met dezelfde testset hebben gedraaid.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       7. LEERPAD
+       ========================================================== -->
+  <section class="sectie sectie-alt" id="leerpad" aria-labelledby="leerpad-kop">
+    <div class="wrap">
+      <p class="label">Ontwikkeling</p>
+      <h2 id="leerpad-kop">Mijn leerpad richting AI Engineer</h2>
+      <p class="intro">De grote roadmap, en daarna de eerste twee jaar in klein.</p>
+
+      <ol class="routekaart">
+        <li><strong>Python &amp; wiskunde</strong><span>De basis om überhaupt te kunnen beginnen</span></li>
+        <li><strong>ML-basis</strong><span>Regressie, classificatie, trainen en testen</span></li>
+        <li><strong>Deep learning</strong><span>Neurale netwerken met PyTorch</span></li>
+        <li><strong>GenAI / RAG</strong><span>Taalmodellen koppelen aan eigen data</span></li>
+        <li><strong>Productie</strong><span>Deployen, monitoren, onderhoudbaar houden</span></li>
+      </ol>
+
+      <h3 class="tussenkop">Baby-roadmap: junior, jaar 0 tot 2</h3>
+      <ol class="babylijst">
+        <li><span>1</span>Python-fundamentals: scripting en objectgeoriënteerd programmeren</li>
+        <li><span>2</span>Data &amp; SQL: queries en data opschonen</li>
+        <li><span>3</span>ML met scikit-learn: regressie en classificatie</li>
+        <li><span>4</span>Deep learning met PyTorch: neurale netwerken</li>
+        <li><span>5</span>GenAI met LangChain en RAG: bouwen en deployen</li>
+      </ol>
+
+      <div class="uitleg-blok">
+        <h3>Waar ik nu sta</h3>
+        <p>
+          Stap 1 heb ik deels af: ik programmeer in Python en JavaScript en heb stage gelopen.
+          Stap 3 heb ik in dit project aangeraakt via Liner.ai, maar dan zonder zelf het model te
+          programmeren. <strong>Mijn volgende stap is een classificatiemodel zelf bouwen met scikit-learn</strong>,
+          zodat ik snap wat Liner.ai voor mij automatiseert.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       8. WOORDENLIJST — direct antwoord op "meer uitleg over AI-termen als LLM".
+       ========================================================== -->
+  <section class="sectie" id="woordenlijst" aria-labelledby="woorden-kop">
+    <div class="wrap">
+      <p class="label">Uitleg</p>
+      <h2 id="woorden-kop">Woordenlijst</h2>
+      <p class="intro">Elke term in één gewone zin. Geen jargon om jargon uit te leggen.</p>
+
+      <label class="zoekveld zoekveld-breed">
+        <span>Zoek een term</span>
+        <input type="search" id="termzoek" placeholder="bijvoorbeeld LLM of confidence" autocomplete="off">
+      </label>
+
+      <dl class="woordenlijst" id="termenlijst">
+        <div class="term"><dt>AI</dt><dd>Software die patronen leert uit voorbeelden in plaats uit regels die een mens uittypt.</dd></div>
+        <div class="term"><dt>Machine learning</dt><dd>De manier waarop die patronen geleerd worden: voorbeelden erin, model eruit.</dd></div>
+        <div class="term"><dt>Classificatie</dt><dd>Een voorbeeld in één van een paar vaste hokjes stoppen. Bij ons: kat, hond of overig.</dd></div>
+        <div class="term"><dt>Confidence</dt><dd>Hoeveel van zijn zekerheid het model op één antwoord zet. Geen garantie dat het klopt.</dd></div>
+        <div class="term"><dt>Trainingsdata</dt><dd>De voorbeelden waar het model van leert.</dd></div>
+        <div class="term"><dt>Testdata</dt><dd>Voorbeelden die het model tijdens trainen nooit zag. Alleen daarmee weet je of het echt werkt.</dd></div>
+        <div class="term"><dt>Bias</dt><dd>Een scheefheid in je data die het model overneemt. Alleen teckels als “hond” is daar een voorbeeld van.</dd></div>
+        <div class="term"><dt>Data augmentation</dt><dd>Je trainingsfoto's kunstmatig variëren (draaien, spiegelen, bijsnijden) zodat het model meer ziet.</dd></div>
+        <div class="term"><dt>Early stopping</dt><dd>De training automatisch stoppen zodra verbeteren uitblijft, zodat je niet nodeloos doortraint.</dd></div>
+        <div class="term"><dt>LLM</dt><dd>Large Language Model: een model dat tekst voorspelt, getraind op heel veel tekst. ChatGPT is er een.</dd></div>
+        <div class="term"><dt>RAG</dt><dd>Retrieval-Augmented Generation: het taalmodel eerst jouw eigen documenten laten opzoeken voordat het antwoordt.</dd></div>
+        <div class="term"><dt>Vector database</dt><dd>Een database die zoekt op betekenis in plaats van op letterlijke woorden. Handig voor RAG.</dd></div>
+        <div class="term"><dt>SavedModel</dt><dd>Het bestandsformaat waarin TensorFlow een getraind model opslaat, zodat een ander programma het kan gebruiken.</dd></div>
+        <div class="term"><dt>Verwarringsmatrix</dt><dd>Een tabel die laat zien welke echte categorie hoe vaak als welke andere categorie werd voorspeld.</dd></div>
+      </dl>
+      <p class="noot" id="termtelling"></p>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       9. BRONNEN
+       ========================================================== -->
+  <section class="sectie sectie-alt" id="bronnen" aria-labelledby="bronnen-kop">
+    <div class="wrap">
+      <p class="label">Verantwoording</p>
+      <h2 id="bronnen-kop">Bronnen en eigen werk</h2>
+      <ul class="bronnenlijst">
+        <li><strong>Onze repository</strong> — <a href="https://github.com/nycck/Project2-AI-Hond-of-Kat-" rel="noopener">Project2-AI-Hond-of-Kat</a>: dataset, testsets, model-exports, <code>app.py</code> en de meetscripts.</li>
+        <li><strong>Liner.ai</strong> — de tool waarmee we trainden en exporteerden.</li>
+        <li><strong>Opdracht</strong> — “AI ontdekken: kat of hond?”, learning story 1 en user stories 1 t/m 9 plus wildcard.</li>
+        <li><strong>Opdracht</strong> — “Project 2: Beroepsrollen onderdeel A”, stappen 1 t/m 6.</li>
+        <li><strong>Gesprekken</strong> — twee interviews uit onze tribe; de samenvatting staat in het bewijsstuk Onderzoeken.</li>
+        <li><strong>Feedback</strong> — de post-its van de presentatie op 24 september 2026.</li>
+      </ul>
+      <p class="noot">
+        Alle cijfers op deze pagina komen uit onze eigen testnotities. Waar een meting nog niet compleet
+        is, staat dat er expliciet bij.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="voet">
+  <div class="wrap">
+    <p><strong>Harsha Kanaparthi</strong> · HBO-ICT Open-ICT, Hogeschool Utrecht · Project 2, semester 1</p>
+    <p class="voet-links"><a href="#boven">Terug naar boven</a> · <a href="https://github.com/nycck/Project2-AI-Hond-of-Kat-" rel="noopener">Repository</a></p>
+    <p class="voet-klein">Gemaakt met HTML, CSS en JavaScript. Geen externe libraries, geen trackers.</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

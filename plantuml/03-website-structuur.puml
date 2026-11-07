@@ -1,0 +1,63 @@
+@startuml
+title Structuur van de website - componenten
+skinparam backgroundColor #FFFFFF
+skinparam component {
+  BackgroundColor #E8F0FE
+  BorderColor #1D4ED8
+}
+package "01-Website" {
+  [index.html] as HTML
+  [css/style.css] as CSS
+  [js/script.js] as JS
+  [img/poot.svg] as SVG
+}
+package "Secties in index.html" {
+  [1 Start] as S1
+  [2 Beroepsrol] as S2
+  [3 Het model] as S3
+  [4 Experimenten] as S4
+  [5 Resultaten] as S5
+  [6 Grenzen] as S6
+  [7 Leerpad] as S7
+  [8 Woordenlijst] as S8
+  [9 Bronnen] as S9
+}
+package "Blokken in script.js" {
+  [1 Meetgegevens METINGEN] as J1
+  [2 Hoofdmenu] as J2
+  [3 Leesmodus + localStorage] as J3
+  [4 Headerhoogte meten] as J4
+  [5 Voortgang + actief menu] as J5
+  [6 Filter proefkaarten] as J6
+  [7 Tabel zoeken/sorteren] as J7
+  [8 Woordenlijst zoeken] as J8
+}
+HTML --> CSS
+HTML --> JS
+HTML --> SVG
+HTML --> S1
+HTML --> S2
+HTML --> S3
+HTML --> S4
+HTML --> S5
+HTML --> S6
+HTML --> S7
+HTML --> S8
+HTML --> S9
+J1 --> J7
+J6 --> S4
+J7 --> S5
+J8 --> S8
+J2 --> HTML
+J3 --> CSS
+J5 --> S1
+note bottom of J1
+  Tien metingen uit zes proeven.
+  Bron: onze testnotities in Liner.ai.
+end note
+note bottom of J3
+  Sleutel: project2-leesmodus
+  Waarde: "0" of "1"
+  Geen persoonsgegeven.
+end note
+@enduml

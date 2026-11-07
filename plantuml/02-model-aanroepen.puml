@@ -1,0 +1,52 @@
+@startuml
+title Een foto door het geexporteerde model - sequence
+skinparam backgroundColor #FFFFFF
+skinparam sequence {
+  ArrowColor #1D4ED8
+  LifeLineBorderColor #2B3D59
+  ParticipantBackgroundColor #E8F0FE
+  ParticipantBorderColor #1D4ED8
+}
+actor Gebruiker
+participant "Browser\nindex.html" as Browser
+participant "app.py\nFlask" as Flask
+participant "common.py\nModel" as Model
+participant "TensorFlow\nSavedModel" as TF
+
+Gebruiker -> Browser: kiest foto en modelversie
+Browser -> Flask: POST /predict (image, model)
+Flask -> Flask: controleer of er een bestand is
+note right of Flask
+  geen bestand -> 400
+  "Geen afbeelding ontvangen."
+end note
+Flask -> Model: list_models()
+Flask -> Flask: modelnaam bekend?
+note right of Flask
+  onbekende naam -> 400
+  invoer niet vertrouwen
+end note
+Flask -> Model: get_model(name).predict(file)
+Model -> Model: load_image()
+note right of Model
+  Image.open
+  exif_transpose (telefoonfoto)
+  convert("RGB")
+end note
+Model -> Model: resize naar modelbreedte
+note right of Model
+  breedte uit example.py
+  hoogte = b * h // b
+  max(1, ...) tegen hoogte 0
+end note
+Model -> TF: constant(array[None], float32)
+TF --> Model: scores per klasse
+Model -> Model: scores optellen per groep
+note right of Model
+  ALIASES: cat -> kat
+  onbekend -> overig
+end note
+Model --> Flask: prediction, confidence, groups, raw
+Flask --> Browser: JSON
+Browser --> Gebruiker: antwoord + verdeling
+@enduml

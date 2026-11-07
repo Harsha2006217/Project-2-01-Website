@@ -1,0 +1,72 @@
+@startuml
+title AI-traject "Hond of kat" - van data tot verbetering
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #E8F0FE
+  BorderColor #1D4ED8
+  FontName Arial
+}
+start
+:US1 - Dataset samenstellen;
+note right
+  minimaal 50 kat
+  minimaal 50 hond
+  minimaal 50 overig
+  voldoende variatie
+end note
+:US2 - Controleren en labelen;
+note right
+  map = label
+  dubbelen eruit
+  onbruikbare foto's eruit
+end note
+:US3 - Eerste model trainen in Liner.ai;
+note right
+  instellingen vastleggen
+  (bij ons nog niet gedaan)
+end note
+:US4 - Testen met ongeziene foto's;
+note right
+  minimaal 30 afbeeldingen
+  voorspelling + confidence
+  per afbeelding loggen
+end note
+:US5 - Patronen in de fouten zoeken;
+fork
+  :Proef 1-2
+  basis en overig;
+fork again
+  :Proef 3
+  extra data;
+fork again
+  :Proef 4
+  verscholen dier;
+fork again
+  :Proef 5-6
+  twee dieren / hybrides;
+end fork
+if (Patroon gevonden?) then (ja)
+  :US6 - Dataset aanpassen
+  (onbalans / teckels);
+  :US7 - Trainingsinstellingen
+  aanpassen;
+  note right: nog niet uitgevoerd
+  :US8 - Opnieuw trainen en testen;
+  note right
+    oude en nieuwe versie
+    met dezelfde testset
+  end note
+else (nee)
+  :Meer variatie in testdata zoeken;
+endif
+:US9 - Model exporteren en code bekijken;
+note right
+  TensorFlow SavedModel
+  saved_model.pb
+  classes.json
+  example.py
+end note
+:Wildcard - ondergrens op confidence;
+note right: ontwerp af, uitvoering nog niet
+stop
+@enduml
